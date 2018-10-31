@@ -7,14 +7,12 @@ use IteratorAggregate;
 
 abstract class AbstractRecipeEvent implements EventInterface
 {
-
     /**
      * @var IteratorAggregate
      */
     protected $data;
 
     protected $persistenceDriver;
-
 
     /**
      * RecipeCreated constructor.
@@ -28,29 +26,30 @@ abstract class AbstractRecipeEvent implements EventInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      *
      * @return string
      */
     public static function getType(): string
     {
-        return "Recipe";
+        return 'Recipe';
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      *
      * @return string
      */
     public static function getContext(): string
     {
-        return "\\App\\ExposeApi\\Recipe\\Core\\Event\\";
+        return '\\App\\ExposeApi\\Recipe\\Core\\Event\\';
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      *
      * @param  $event
+     *
      * @return string
      */
     public static function getContextFromType(string $event): string
@@ -59,11 +58,9 @@ abstract class AbstractRecipeEvent implements EventInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      *
      * @return string
      */
-    public abstract function handle();
-
-
+    abstract public function handle();
 }

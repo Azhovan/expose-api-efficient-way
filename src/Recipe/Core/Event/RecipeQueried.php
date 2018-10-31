@@ -2,7 +2,6 @@
 
 namespace App\ExposeApi\Recipe\Core\Event;
 
-
 use App\ExposeApi\Core\Contracts\Jsonable;
 use App\ExposeApi\Recipe\Core\Traits\RedisTrait;
 use Countable;
@@ -10,22 +9,20 @@ use IteratorAggregate;
 use Traversable;
 
 /**
- * find and get the Recipe's details
+ * find and get the Recipe's details.
  *
  * Class QueryRecipe
- *
- * @package App\ExposeApi\Recipe\Event
  */
 final class RecipeQueried extends AbstractRecipeEvent implements Countable, IteratorAggregate, Jsonable
 {
-
     use RedisTrait;
 
     /**
-     * event handler
+     * event handler.
+     *
+     * @throws \Exception
      *
      * @return string
-     * @throws \Exception
      */
     public function handle()
     {
@@ -35,8 +32,9 @@ final class RecipeQueried extends AbstractRecipeEvent implements Countable, Iter
     }
 
     /**
-     * @inheritdoc
-     * @return     Traversable|void
+     * {@inheritdoc}
+     *
+     * @return Traversable|void
      */
     public function getIterator()
     {
@@ -44,9 +42,10 @@ final class RecipeQueried extends AbstractRecipeEvent implements Countable, Iter
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      *
-     * @param  int $options
+     * @param int $options
+     *
      * @return string
      */
     public function toJson($options = 0)
@@ -55,8 +54,8 @@ final class RecipeQueried extends AbstractRecipeEvent implements Countable, Iter
     }
 
     /**
-     * @inheritdoc
-     * Count elements of an object
+     * {@inheritdoc}
+     * Count elements of an object.
      */
     public function count()
     {

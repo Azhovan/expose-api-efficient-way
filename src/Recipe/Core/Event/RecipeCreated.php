@@ -9,15 +9,15 @@ use Traversable;
 
 final class RecipeCreated extends AbstractRecipeEvent implements IteratorAggregate, Jsonable
 {
-
     use RedisTrait;
 
     /**
      * event handler
-     * data will be PERSIST in redis
+     * data will be PERSIST in redis.
+     *
+     * @throws \Exception
      *
      * @return string
-     * @throws \Exception
      */
     public function handle()
     {
@@ -26,10 +26,10 @@ final class RecipeCreated extends AbstractRecipeEvent implements IteratorAggrega
         return $this->getOrFail($this->data->id);
     }
 
-
     /**
-     * @inheritdoc
-     * @return     Traversable|void
+     * {@inheritdoc}
+     *
+     * @return Traversable|void
      */
     public function getIterator()
     {
@@ -37,14 +37,14 @@ final class RecipeCreated extends AbstractRecipeEvent implements IteratorAggrega
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      *
-     * @param  int $options
+     * @param int $options
+     *
      * @return string
      */
     public function toJson($options = 0)
     {
         return $this->data->getFluent()->toJson($options);
     }
-
 }

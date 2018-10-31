@@ -9,15 +9,12 @@ use App\ExposeApi\Recipe\RecipeTemplate;
 use PHPUnit\Framework\TestCase;
 
 /**
- * By making these tests all controller's functionality will be tested
+ * By making these tests all controller's functionality will be tested.
  *
  * Class BuilderTest
- *
- * @package Tests
  */
 class BuilderTest extends TestCase
 {
-
     private const SUCCESS_ACTION = 1;
     private const ERROR_ACTION = 0;
     private const RATE_EXAMPLE = 2;
@@ -47,15 +44,14 @@ class BuilderTest extends TestCase
         $this->assertInstanceOf(\App\ExposeApi\Recipe\RecipeTemplate::class, $builder->createTemplate([]));
     }
 
-
     public function test_create_function()
     {
         $builder = new Builder();
         $data = [
-            "name" => "name-1",
-            "prepTime" => "21 minutes",
-            "difficulty" => "HARD",
-            "vegetarian" => false
+            'name'       => 'name-1',
+            'prepTime'   => '21 minutes',
+            'difficulty' => 'HARD',
+            'vegetarian' => false,
         ];
         $id = $this->recipeId;
 
@@ -69,7 +65,7 @@ class BuilderTest extends TestCase
             }
         );
 
-        $expected = '{"name":"name-1","prepTime":"21 minutes","difficulty":"HARD","vegetarian":false,"id":"' . $id . '"}';
+        $expected = '{"name":"name-1","prepTime":"21 minutes","difficulty":"HARD","vegetarian":false,"id":"'.$id.'"}';
 
         $mockReponseObject = $this->createMock(\Klein\Response::class);
         $this->assertSame($expected, (new Response($result, $mockReponseObject))->get());
@@ -79,16 +75,17 @@ class BuilderTest extends TestCase
 
     /**
      * @depends test_create_function
+     *
      * @param   $recipeId
      */
     public function test_fetch_a_recipe_result($recipeId)
     {
         $builder = new Builder();
         $data = [
-            "name" => "name-1",
-            "prepTime" => "21 minutes",
-            "difficulty" => "HARD",
-            "vegetarian" => false
+            'name'       => 'name-1',
+            'prepTime'   => '21 minutes',
+            'difficulty' => 'HARD',
+            'vegetarian' => false,
         ];
         $id = $this->recipeId;
 
@@ -102,7 +99,7 @@ class BuilderTest extends TestCase
             }
         );
 
-        $expected = '{"name":"name-1","prepTime":"21 minutes","difficulty":"HARD","vegetarian":false,"id":"' . $id . '"}';
+        $expected = '{"name":"name-1","prepTime":"21 minutes","difficulty":"HARD","vegetarian":false,"id":"'.$id.'"}';
         $mockReponseObject = $this->createMock(\Klein\Response::class);
 
         $actual = $builder->get(['id' => $id]);
@@ -112,19 +109,20 @@ class BuilderTest extends TestCase
     }
 
     /**
-     *
      * @depends test_create_function
+     *
      * @param   $recipeId
-     * @return  mixed
+     *
+     * @return mixed
      */
     public function test_update_function($recipeId)
     {
         $builder = new Builder();
         $data = [
-            "name" => "name-2",
-            "prepTime" => "prepTime-2",
-            "difficulty" => "HARD-2",
-            "vegetarian" => true
+            'name'       => 'name-2',
+            'prepTime'   => 'prepTime-2',
+            'difficulty' => 'HARD-2',
+            'vegetarian' => true,
         ];
 
         $result = $builder->update(
@@ -137,19 +135,18 @@ class BuilderTest extends TestCase
             }
         );
 
-        $expected = '{"name":"name-2","prepTime":"prepTime-2","difficulty":"HARD-2","vegetarian":true,"id":"' . $recipeId . '"}';
+        $expected = '{"name":"name-2","prepTime":"prepTime-2","difficulty":"HARD-2","vegetarian":true,"id":"'.$recipeId.'"}';
 
         $mockReponseObject = $this->createMock(\Klein\Response::class);
         $this->assertSame($expected, (new Response($result, $mockReponseObject))->get());
 
         return $recipeId;
-
     }
 
     /**
-     *
      * @depends test_update_function
-     * @return  mixed
+     *
+     * @return mixed
      */
     public function test_rate_recipe_function($recipeId)
     {
@@ -165,14 +162,14 @@ class BuilderTest extends TestCase
             }
         );
 
-
-        $expected = '{"rates":[' . self::RATE_EXAMPLE . ']}';
+        $expected = '{"rates":['.self::RATE_EXAMPLE.']}';
         $mockReponseObject = $this->createMock(\Klein\Response::class);
         $this->assertSame($expected, (new Response($result, $mockReponseObject))->get());
     }
 
     /**
      * @depends test_create_function
+     *
      * @param   $recipeId
      */
     public function test_delete_a_recipe($recipeId)
@@ -181,8 +178,6 @@ class BuilderTest extends TestCase
 
         $response = $builder->delete(['id' => $recipeId]);
 
-        $this->assertSame(self::SUCCESS_ACTION, (int)$response);
+        $this->assertSame(self::SUCCESS_ACTION, (int) $response);
     }
-
-
 }

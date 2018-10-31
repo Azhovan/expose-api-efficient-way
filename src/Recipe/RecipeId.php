@@ -6,5 +6,4 @@ use App\ExposeApi\Core\AccumulateId;
 
 class RecipeId extends AccumulateId
 {
-
 }

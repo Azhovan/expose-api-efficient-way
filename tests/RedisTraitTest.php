@@ -2,8 +2,8 @@
 
 namespace Tests;
 
-use App\ExposeApi\Recipe\Exception\ExposeApiInvalidArgument;
 use App\ExposeApi\Recipe\Core\Traits\RedisTrait;
+use App\ExposeApi\Recipe\Exception\ExposeApiInvalidArgument;
 use PHPUnit\Framework\TestCase;
 use Predis\Client as RedisClient;
 
@@ -32,13 +32,13 @@ class RedisTraitTest extends TestCase
     public function test_getOrCreate_function_create_empty_set_if_key_does_not_exists()
     {
         $this->getOrCreate('invalid_key');
-        $this->assertSame("{}", $this->get('invalid_key'));
+        $this->assertSame('{}', $this->get('invalid_key'));
     }
 
     public function test_getOrCreate_function_return_set_if_key_does_exists()
     {
         $this->save('key', 'value');
-        $this->assertSame("value", $this->getOrCreate('key'));
+        $this->assertSame('value', $this->getOrCreate('key'));
     }
 
     public function test_save_function_will_set_value_for_custom_key()
@@ -50,17 +50,17 @@ class RedisTraitTest extends TestCase
 
     public function test_function_get_return_all_sets_if_argument_is_wildcard()
     {
-        $this->clean();;
+        $this->clean();
 
         $this->save('key1', 'value1');
         $this->save('key2', 'value2');
 
         $expected = [
-            "value1",
-            "value2"
+            'value1',
+            'value2',
         ];
 
-        $actual = $this->get("*");
+        $actual = $this->get('*');
         sort($actual);
 
         $this->assertEquals($expected, $actual);
@@ -72,7 +72,7 @@ class RedisTraitTest extends TestCase
         $this->expectExceptionCode(404);
 
         $this->clean();
-        $this->get("not-existed-key");
+        $this->get('not-existed-key');
     }
 
     public function test_has_function_return_true_if_key_exists()
@@ -86,16 +86,16 @@ class RedisTraitTest extends TestCase
     {
         $this->clean();
         $expected = [
-            "name" => "1b",
-            "prepTime" => "2b",
-            "vegetarian" => false,
-            "difficulty" => "3b",
-            "id" => "4df604aa-0693-4d8e-ad26-6f3eca4d81b6"
+            'name'       => '1b',
+            'prepTime'   => '2b',
+            'vegetarian' => false,
+            'difficulty' => '3b',
+            'id'         => '4df604aa-0693-4d8e-ad26-6f3eca4d81b6',
         ];
 
-        $this->save("4df604aa-0693-4d8e-ad26-6f3eca4d81b6", json_encode($expected));
+        $this->save('4df604aa-0693-4d8e-ad26-6f3eca4d81b6', json_encode($expected));
 
-        $actual = json_decode($this->search("4df604aa-0693-4d8e-ad26-6f3eca4d81b6"), true);
+        $actual = json_decode($this->search('4df604aa-0693-4d8e-ad26-6f3eca4d81b6'), true);
 
         $this->assertSame(json_encode($expected), $actual[0]);
     }
@@ -106,9 +106,9 @@ class RedisTraitTest extends TestCase
         $this->clean();
 
         $needle = [
-            "name" => "name",
-            "prepTime" => "21 min",
-            "difficulty" => "hard",
+            'name'       => 'name',
+            'prepTime'   => '21 min',
+            'difficulty' => 'hard',
         ];
         $this->search(json_encode($needle));
     }
@@ -123,7 +123,7 @@ class RedisTraitTest extends TestCase
     {
         $this->clean();
         $this->save('key1', 'value1');
-        $this->assertTrue(self::KEY_DELETED == $this->deleteOrFail("key1"));
+        $this->assertTrue(self::KEY_DELETED == $this->deleteOrFail('key1'));
     }
 
     public function test_function_deleteOrFail_return_exception_if_key_not_exists()
@@ -132,7 +132,7 @@ class RedisTraitTest extends TestCase
         $this->expectException(ExposeApiInvalidArgument::class);
         $this->expectExceptionCode(404);
 
-        $this->deleteOrFail("key1");
+        $this->deleteOrFail('key1');
     }
 
     public function test_rating_append_function_will_append_value_as_rates_to_custom_key()
@@ -142,8 +142,8 @@ class RedisTraitTest extends TestCase
 
         $customPostfix = '-rate';
 
-        $result = $this->append("key1", "rate1", $customPostfix);
-        $result = $this->append("key1", "rate2", $customPostfix);
+        $result = $this->append('key1', 'rate1', $customPostfix);
+        $result = $this->append('key1', 'rate2', $customPostfix);
 
         $expected = '{"rates":["rate1","rate2"]}';
 
@@ -155,8 +155,6 @@ class RedisTraitTest extends TestCase
         $this->expectException(ExposeApiInvalidArgument::class);
 
         $this->clean();
-        $this->append("key1", "rate2", '-rate');
+        $this->append('key1', 'rate2', '-rate');
     }
-
-
 }

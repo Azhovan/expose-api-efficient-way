@@ -2,7 +2,6 @@
 
 namespace App\ExposeApi\Core;
 
-
 use App\ExposeApi\Core\Contracts\Arrayable;
 use App\ExposeApi\Core\Contracts\Jsonable;
 use Countable;
@@ -10,13 +9,11 @@ use JsonSerializable;
 
 class Fluent implements Jsonable, JsonSerializable, Arrayable, Countable
 {
-
-    public $attributes = array();
-
+    public $attributes = [];
 
     /**
+     * @param array $attributes
      *
-     * @param  array $attributes
      * @return void
      */
     public function __construct(array $attributes = [])
@@ -29,9 +26,10 @@ class Fluent implements Jsonable, JsonSerializable, Arrayable, Countable
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      *
-     * @param  int $options
+     * @param int $options
+     *
      * @return string
      */
     public function toJson($options = 0)
@@ -40,7 +38,7 @@ class Fluent implements Jsonable, JsonSerializable, Arrayable, Countable
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      *
      * @return array
      */
@@ -49,9 +47,8 @@ class Fluent implements Jsonable, JsonSerializable, Arrayable, Countable
         return $this->toArray();
     }
 
-
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      *
      * @return array
      */
@@ -71,24 +68,28 @@ class Fluent implements Jsonable, JsonSerializable, Arrayable, Countable
 
     /**
      * @param  $key
+     *
      * @return mixed
      */
     public function key($key)
     {
-        if(!array_key_exists($key, $this->attributes))
-            return null;
+        if (!array_key_exists($key, $this->attributes)) {
+            return;
+        }
 
         return $this->attributes[$key];
     }
 
     /**
-     * Count elements of an object
+     * Count elements of an object.
      *
      * @link   http://php.net/manual/en/countable.count.php
+     *
      * @return int The custom count as an integer.
-     * </p>
-     * <p>
-     * The return value is cast to an integer.
+     *             </p>
+     *             <p>
+     *             The return value is cast to an integer.
+     *
      * @since  5.1.0
      */
     public function count()

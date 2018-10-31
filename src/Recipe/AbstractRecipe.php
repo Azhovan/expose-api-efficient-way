@@ -2,11 +2,10 @@
 
 namespace App\ExposeApi\Recipe;
 
-
 abstract class AbstractRecipe
 {
     /**
-     * Get the recipe builder class instance
+     * Get the recipe builder class instance.
      *
      * @return mixed
      *
@@ -19,18 +18,18 @@ abstract class AbstractRecipe
      *
      * @param  $method
      * @param  $arguments
-     * @return mixed
      *
      * @throws \RuntimeException
+     *
+     * @return mixed
      */
     public static function __callStatic($method, $arguments)
     {
         $instance = static::getRecipeAccessor();
 
         if (!$instance) {
-            throw new \RuntimeException("Recipe builder class does not exist");
+            throw new \RuntimeException('Recipe builder class does not exist');
         }
-
 
         return $instance->$method(...$arguments);
     }

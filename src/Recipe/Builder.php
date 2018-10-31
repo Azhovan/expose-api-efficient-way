@@ -7,78 +7,76 @@ use Closure;
 
 class Builder
 {
-
     /**
-     * Create a new Recipe based on Template
+     * Create a new Recipe based on Template.
      *
      * @param  $data
-     * @param  Closure $callback
+     * @param Closure $callback
+     *
      * @return string
      */
     public function create($data, Closure $callback = null): string
     {
-
         return $this->build(
             plug(
                 $this->createTemplate($data), function ($template) use ($callback) {
-
                     return $callback($template);
-
                 }
-            ), "RecipeCreated"
+            ), 'RecipeCreated'
         );
     }
 
     /**
-     * Delete a Recipe template
+     * Delete a Recipe template.
      *
      * @param  $id
-     * @param  Closure $callback
+     * @param Closure $callback
+     *
      * @return string
      */
     public function delete(array $id, Closure $callback = null): string
     {
-        return $this->build($this->createTemplate($id), "RecipeDeleted");
+        return $this->build($this->createTemplate($id), 'RecipeDeleted');
     }
 
     /**
-     * Update the Recipe with given data
+     * Update the Recipe with given data.
      *
      * @param  $data
-     * @param  Closure $callback
+     * @param Closure $callback
+     *
      * @return string
      */
     public function update(array $data, Closure $callback = null): string
     {
-
         return $this->build(
             plug(
                 $this->createTemplate($data), function ($template) use ($callback) {
-
                     return $callback($template);
-
                 }
-            ), "RecipeUpdated"
+            ), 'RecipeUpdated'
         );
     }
 
     /**
-     * Get one or more Recipe[s] details
+     * Get one or more Recipe[s] details.
      *
      * @param  $id
-     * @param  Closure|null $callback
+     * @param Closure|null $callback
+     *
      * @return mixed
      */
     public function get(array $id, Closure $callback = null)
     {
-        return $this->build($this->createTemplate($id), "RecipeQueried");
+        return $this->build($this->createTemplate($id), 'RecipeQueried');
     }
 
     /**
-     * Rate the Recipe
+     * Rate the Recipe.
      *
-     * @param  array   $data
-     * @param  Closure $callback
+     * @param array   $data
+     * @param Closure $callback
+     *
      * @return mixed
      */
     public function rate(array $data, Closure $callback)
@@ -86,19 +84,18 @@ class Builder
         return $this->build(
             plug(
                 $this->createTemplate($data), function ($template) use ($callback) {
-
                     return $callback($template);
-
                 }
-            ), "RecipeRated"
+            ), 'RecipeRated'
         );
     }
 
     /**
-     * Search the Recipe
+     * Search the Recipe.
      *
-     * @param  array   $data
-     * @param  Closure $callback
+     * @param array   $data
+     * @param Closure $callback
+     *
      * @return mixed
      */
     public function search(array $data, Closure $callback)
@@ -106,35 +103,33 @@ class Builder
         return $this->build(
             plug(
                 $this->createTemplate($data), function ($template) use ($callback) {
-
                     return $callback($template);
-
                 }
-            ), "RecipeSearched"
+            ), 'RecipeSearched'
         );
     }
 
     /**
-     * dispatch the event
+     * dispatch the event.
      *
-     * @param  RecipeTemplate $templateObject
+     * @param RecipeTemplate $templateObject
+     *
      * @return mixed
      */
     private function build(RecipeTemplate $templateObject, $event)
     {
-
         return dispatch(AbstractRecipeEvent::getContextFromType($event), $templateObject);
     }
 
     /**
-     * Create new Template
+     * Create new Template.
      *
-     * @param  array $data
+     * @param array $data
+     *
      * @return RecipeTemplate
      */
     public function createTemplate(array $data): RecipeTemplate
     {
         return new RecipeTemplate($data);
     }
-
 }

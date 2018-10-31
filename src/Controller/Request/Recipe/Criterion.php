@@ -4,10 +4,8 @@ namespace App\ExposeApi\Controller\Request\Recipe;
 
 trait Criterion
 {
-
-
     /**
-     * check validation rule, and fill errorBag
+     * check validation rule, and fill errorBag.
      *
      * @param $attribute
      */
@@ -19,7 +17,7 @@ trait Criterion
     }
 
     /**
-     * check validation rule, and fill errorBag
+     * check validation rule, and fill errorBag.
      *
      * @param $min
      * @param $max
@@ -37,6 +35,7 @@ trait Criterion
      * Determine if the attribute exists in body of the request.
      *
      * @param  $attribute
+     *
      * @return bool
      */
     private function inBody($attribute): bool
@@ -45,9 +44,10 @@ trait Criterion
     }
 
     /**
-     * Determine if the attribute exists in requests parameters
+     * Determine if the attribute exists in requests parameters.
      *
      * @param  $attribute
+     *
      * @return bool
      */
     private function inParams($attribute): bool
@@ -59,13 +59,14 @@ trait Criterion
     {
         if ($this->inBody($attribute)) {
             return $this->ReturnFromBody($attribute);
-        } else if ($this->inParams($attribute)) {
+        } elseif ($this->inParams($attribute)) {
             return $this->returnFromParams($attribute);
         }
     }
 
     /**
      * @param  $attribute
+     *
      * @return mixed|bool
      */
     private function returnFromBody($attribute)
@@ -80,11 +81,12 @@ trait Criterion
 
     /**
      * @param  $attribute
+     *
      * @return mixed|bool
      */
     private function returnFromParams($attribute)
     {
-        if (!empty($this->getRequestInstance()->param($attribute)) 
+        if (!empty($this->getRequestInstance()->param($attribute))
             && null !== $this->getRequestInstance()->param($attribute)
         ) {
             return $this->getRequestInstance()->param($attribute);
@@ -92,6 +94,4 @@ trait Criterion
 
         return false;
     }
-
-
 }

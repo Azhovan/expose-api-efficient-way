@@ -17,7 +17,6 @@ class AccumulateIdTest extends TestCase
         new AccumulateId('');
     }
 
-
     public function test_generate_function_return_36_length_string()
     {
         $interfaceMock = $this->createMock(UuidInterface::class);
@@ -50,9 +49,6 @@ class AccumulateIdTest extends TestCase
         $interfaceMock = $this->createMock(UuidInterface::class);
         $accObject = new AccumulateId($interfaceMock);
 
-        $this->assertTrue(method_exists($accObject, "__toString"));
+        $this->assertTrue(method_exists($accObject, '__toString'));
     }
-
-
-
 }

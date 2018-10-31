@@ -6,22 +6,18 @@ use App\ExposeApi\Controller\Request\AbstractRequest;
 use Klein\Request;
 
 /**
- * Filter the request before proceed with the request in controller
- *
- * @package App\ExposeApi\Controller\Request
+ * Filter the request before proceed with the request in controller.
  */
 class SearchRequest extends AbstractRequest
 {
-
     public function __construct(Request $request)
     {
         $this->requestInstance = $request;
     }
 
-
     /**
      * Get the validation rules
-     * these rules will be applied to request
+     * these rules will be applied to request.
      *
      * @return array
      */
@@ -32,7 +28,7 @@ class SearchRequest extends AbstractRequest
 
     /**
      * Determine if the user is authorized or not
-     * if false returned , user is not able to access to resource
+     * if false returned , user is not able to access to resource.
      *
      * @return bool
      */
@@ -51,6 +47,4 @@ class SearchRequest extends AbstractRequest
     {
         return [];
     }
-
-
 }

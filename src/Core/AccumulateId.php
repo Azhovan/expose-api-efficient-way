@@ -3,9 +3,8 @@
 namespace App\ExposeApi\Core;
 
 use Exception;
-use Ramsey\Uuid\{
-    Uuid, UuidInterface
-};
+use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\UuidInterface;
 
 class AccumulateId implements AccumulateIdInterface
 {
@@ -25,7 +24,8 @@ class AccumulateId implements AccumulateIdInterface
     }
 
     /**
-     * @param  string $string
+     * @param string $string
+     *
      * @return AccumulateIdInterface
      */
     public static function rebuild($string)
@@ -34,20 +34,19 @@ class AccumulateId implements AccumulateIdInterface
     }
 
     /**
-     * generate proper uuid4 value
+     * generate proper uuid4 value.
+     *
+     * @throws Exception
      *
      * @return UuidInterface
-     * @throws Exception
      */
     public static function generate()
     {
         return Uuid::uuid4();
     }
 
-
     public function __toString()
     {
         return $this->id;
     }
-
 }
