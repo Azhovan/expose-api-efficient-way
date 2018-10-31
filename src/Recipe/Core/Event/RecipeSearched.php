@@ -2,40 +2,36 @@
 
 namespace App\ExposeApi\Recipe\Core\Event;
 
-
 use App\ExposeApi\Core\Contracts\Jsonable;
-use App\ExposeApi\Recipe\Exception\ExposeApiInvalidArgument;
 use App\ExposeApi\Recipe\Core\Traits\RedisTrait;
 use Countable;
 use IteratorAggregate;
 
 /**
- * Search and get the Recipe's details
+ * Search and get the Recipe's details.
  *
  * Class QueryRecipe
- *
- * @package App\ExposeApi\Recipe\Event
  */
 final class RecipeSearched extends AbstractRecipeEvent implements Countable, IteratorAggregate, Jsonable
 {
-
     use RedisTrait;
 
     /**
      * event handler
-     *  search with Iterator
+     *  search with Iterator.
+     *
+     * @throws \Exception
      *
      * @return string
-     * @throws \Exception
      */
     public function handle()
     {
         return $this->search($this->toJson());
     }
 
-
     /**
-     * @inheritdoc
+     * {@inheritdoc}
+     *
      * @return
      */
     public function getIterator()
@@ -44,9 +40,10 @@ final class RecipeSearched extends AbstractRecipeEvent implements Countable, Ite
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      *
-     * @param  int $options
+     * @param int $options
+     *
      * @return string
      */
     public function toJson($options = 0)
@@ -55,12 +52,11 @@ final class RecipeSearched extends AbstractRecipeEvent implements Countable, Ite
     }
 
     /**
-     * @inheritdoc
-     * Count elements of an object
+     * {@inheritdoc}
+     * Count elements of an object.
      */
     public function count()
     {
         return $this->data->getFluent()->count();
     }
-
 }

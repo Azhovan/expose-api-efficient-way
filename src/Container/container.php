@@ -1,13 +1,11 @@
 <?php
 
-require __DIR__ . '/../helpers/helpers.php';
-
+require __DIR__.'/../helpers/helpers.php';
 
 $route = new \Klein\Klein();
 
 $route->respond(
     function ($request, $response, $service, $app) use ($route) {
-
         $app->register(
             'RecipeController', function () {
                 return new \App\ExposeApi\Controller\RecipeController();
@@ -25,6 +23,5 @@ $route->respond(
                 return new \App\ExposeApi\Controller\SearchController();
             }
         );
-
     }
 );

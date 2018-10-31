@@ -2,7 +2,6 @@
 
 namespace App\ExposeApi\Controller;
 
-
 use App\ExposeApi\Controller\Request\Recipe\RateRequest;
 use App\ExposeApi\Recipe\Recipe;
 use App\ExposeApi\Recipe\RecipeTemplate;
@@ -11,12 +10,9 @@ use Klein\Request;
 
 class RateRecipeController extends BaseController
 {
-
-
     public function rate(Request $request, App $app)
     {
         try {
-
             $rateRequest = new RateRequest($request);
             $rateRequest->validate();
 
@@ -34,17 +30,14 @@ class RateRecipeController extends BaseController
                     $item->rate();
                 }
             );
-
         } catch (\Throwable $exception) {
             return json_encode(
                 [
-                "code" => $exception->getCode(),
-                "errors" => true,
+                'code'    => $exception->getCode(),
+                'errors'  => true,
                 'message' => $exception->getMessage(),
                 ]
             );
-
         }
     }
-
 }

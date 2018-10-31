@@ -4,13 +4,10 @@ namespace App\ExposeApi\Controller\Request;
 
 /**
  * this class help the controllers to get data with minimum effort from the request object
- * Class SimplifyRequestBagTrait
- *
- * @package App\ExposeApi\Controller\Request\Recipe
+ * Class SimplifyRequestBagTrait.
  */
 trait SimplifyRequestBagTrait
 {
-
     public function getRequestData()
     {
         $body = json_decode($this->getRequestInstance()->body(), true);
@@ -18,6 +15,4 @@ trait SimplifyRequestBagTrait
 
         return array_merge($body, $params);
     }
-
-
 }

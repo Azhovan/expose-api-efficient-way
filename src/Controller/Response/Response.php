@@ -4,14 +4,12 @@ namespace App\ExposeApi\Controller\Response;
 
 class Response
 {
-
     private $response;
 
     private const RESPONSE = [
         'success_response' => 1,
-        'error_response' => 0
+        'error_response'   => 0,
     ];
-
 
     /**
      * Response constructor.
@@ -21,13 +19,11 @@ class Response
      */
     public function __construct(string $body, \Klein\Response $response)
     {
-
         $body = json_decode($body, true);
 
         if ($body == self::RESPONSE['success_response']) {
             $body = $this->successMessage();
-
-        } else if ($body == self::RESPONSE['error_response']) {
+        } elseif ($body == self::RESPONSE['error_response']) {
             $body = $this->failedMessage();
         }
 
@@ -45,7 +41,7 @@ class Response
      */
     private function successMessage()
     {
-        return ["message" => "action successfully done"];
+        return ['message' => 'action successfully done'];
     }
 
     /**
@@ -53,7 +49,7 @@ class Response
      */
     private function failedMessage()
     {
-        return ["message" => "action failed"];
+        return ['message' => 'action failed'];
     }
 
     /**
@@ -71,5 +67,4 @@ class Response
     {
         return $this->response;
     }
-
 }

@@ -2,11 +2,9 @@
 
 namespace App\ExposeApi\Recipe;
 
-
 /**
- * Class Recipe
+ * Class Recipe.
  *
- * @package App\ExposeApi\Recipe
  *
  * @method static \App\ExposeApi\Recipe\Builder create (array $data, \Closure $callback)
  * @method static \App\ExposeApi\Recipe\Builder delete (array $id, \Closure $callback = null)
@@ -19,9 +17,8 @@ namespace App\ExposeApi\Recipe;
  */
 class Recipe extends AbstractRecipe
 {
-
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      *
      * @return Builder|mixed
      */

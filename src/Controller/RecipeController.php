@@ -13,17 +13,16 @@ use Klein\Request;
 
 class RecipeController extends BaseController
 {
-
     /**
-     * store a recipe in database
+     * store a recipe in database.
      *
-     * @param  Request $request
-     * @param  App     $app
+     * @param Request $request
+     * @param App     $app
+     *
      * @return mixed
      */
     public function store(Request $request, App $app)
     {
-
         try {
             $createRequest = new CreateRequest($request);
             $createRequest->validate();
@@ -46,32 +45,26 @@ class RecipeController extends BaseController
             );
 
             return $response;
-
-
         } catch (\Throwable $exception) {
             return json_encode(
                 [
-                "code" => $exception->getCode(),
-                "errors" => true,
+                'code'    => $exception->getCode(),
+                'errors'  => true,
                 'message' => $exception->getMessage(),
                 ]
             );
-
         }
-
-
     }
 
-
     /**
-     * @param  Request $request
-     * @param  App     $app
+     * @param Request $request
+     * @param App     $app
+     *
      * @return \App\ExposeApi\Recipe\Builder|array
      */
     public function delete(Request $request, App $app)
     {
         try {
-
             $createRequest = new DeleteRequest($request);
             $createRequest->validate();
 
@@ -82,30 +75,26 @@ class RecipeController extends BaseController
             $id = $request->param('id');
 
             return Recipe::delete(['id' => $id]);
-
         } catch (\Throwable $exception) {
             return json_encode(
                 [
-                "code" => $exception->getCode(),
-                "errors" => true,
-                'message' => $exception->getMessage()
+                'code'    => $exception->getCode(),
+                'errors'  => true,
+                'message' => $exception->getMessage(),
                 ]
             );
-
         }
     }
 
-
     /**
-     * @param  Request $request
-     * @param  App     $app
+     * @param Request $request
+     * @param App     $app
+     *
      * @return \App\ExposeApi\Recipe\Builder|array
      */
     public function update(Request $request, App $app)
     {
-
         try {
-
             $updateRequest = new UpdateRequest($request);
             $updateRequest->validate();
 
@@ -127,46 +116,37 @@ class RecipeController extends BaseController
             );
 
             return $response;
-
-
         } catch (\Throwable $exception) {
             return json_encode(
                 [
-                "code" => $exception->getCode(),
-                "errors" => true,
-                'message' => $exception->getMessage()
+                'code'    => $exception->getCode(),
+                'errors'  => true,
+                'message' => $exception->getMessage(),
                 ]
             );
-
         }
-
-
     }
 
     /**
-     * @param  Request $request
-     * @param  App     $app
+     * @param Request $request
+     * @param App     $app
+     *
      * @return \App\ExposeApi\Recipe\Builder|array
      */
     public function index(Request $request, App $app)
     {
         try {
-
             $id = $request->param('id') ?? '*';
 
             return Recipe::get(['id' => $id]);
-
         } catch (\Throwable $exception) {
             return json_encode(
                 [
-                "code" => $exception->getCode(),
-                "errors" => true,
-                'message' => $exception->getMessage()
+                'code'    => $exception->getCode(),
+                'errors'  => true,
+                'message' => $exception->getMessage(),
                 ]
             );
-
         }
-
     }
-
 }

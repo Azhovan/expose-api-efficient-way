@@ -4,15 +4,14 @@
  *  -----------------------------------------
  *  Endpoint Registration
  *  -----------------------------------------
- *   inject the requests to targeted controller
+ *   inject the requests to targeted controller.
  */
-
 use App\ExposeApi\Controller\Response\Response;
 
 $route->with(
     '/recipes', function () use ($route) {
 
-        /**
+        /*
          * GET recipe by id
          */
         $route->respond(
@@ -21,11 +20,12 @@ $route->with(
                     $request,
                     $app
                 );
+
                 return (new Response($result, $route->response()))->get();
             }
         );
 
-        /**
+        /*
          * POST specific recipe
          */
         $route->respond(
@@ -39,12 +39,11 @@ $route->with(
             }
         );
 
-
-        /**
+        /*
          * Update specific recipe
          */
         $route->respond(
-            array('PUT','PATCH'), '/[:id]/?', function ($request, $response, $service, $app) use ($route) {
+            ['PUT', 'PATCH'], '/[:id]/?', function ($request, $response, $service, $app) use ($route) {
                 $result = $app->RecipeController->update(
                     $request,
                     $app
@@ -54,8 +53,7 @@ $route->with(
             }
         );
 
-
-        /**
+        /*
          * Get specific recipe or a List of them
          */
         $route->respond(
@@ -69,7 +67,7 @@ $route->with(
             }
         );
 
-        /**
+        /*
          * Rate recipe by id
          */
         $route->respond(
@@ -79,14 +77,11 @@ $route->with(
                     $app
                 );
 
-
                 return (new Response($result, $route->response()))->get();
             }
         );
 
-
-
-        /**
+        /*
          * Search Specific key=value
          */
         $route->respond(
@@ -99,9 +94,7 @@ $route->with(
                 return (new Response($result, $route->response()))->get();
             }
         );
-
     }
 );
-
 
 return $route;

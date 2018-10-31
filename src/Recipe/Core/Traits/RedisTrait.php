@@ -7,9 +7,8 @@ use App\ExposeApi\Recipe\Exception\ExposeApiInvalidArgument;
 
 trait RedisTrait
 {
-
     /**
-     * get Driver for this implementation
+     * get Driver for this implementation.
      *
      * @return \Predis\Client
      */
@@ -22,11 +21,13 @@ trait RedisTrait
     }
 
     /**
-     * return value(s) of key(s) if exists, nor return exception
+     * return value(s) of key(s) if exists, nor return exception.
      *
      * @param  $key
-     * @return mixed
+     *
      * @throws \Exception
+     *
+     * @return mixed
      */
     public function getOrFail($key)
     {
@@ -35,21 +36,22 @@ trait RedisTrait
             return $this->persistenceDriver->get($key);
         }
 
-        throw new ExposeApiInvalidArgument("key not found", 404);
-
+        throw new ExposeApiInvalidArgument('key not found', 404);
     }
 
     /**
-     * delete item, update the disk Asynchronously
+     * delete item, update the disk Asynchronously.
      *
      * @param  $key
-     * @return int
+     *
      * @throws \Exception
+     *
+     * @return int
      */
     public function deleteOrFail($key): int
     {
         if (!$this->has($key)) {
-            throw new ExposeApiInvalidArgument("key does not exists", 404);
+            throw new ExposeApiInvalidArgument('key does not exists', 404);
         }
 
         $result = $this->persistenceDriver->del($key);
@@ -59,7 +61,7 @@ trait RedisTrait
     }
 
     /**
-     *  Asynchronously save the dataset to disk (in background)
+     *  Asynchronously save the dataset to disk (in background).
      *
      * @return mixed
      */
@@ -69,13 +71,15 @@ trait RedisTrait
     }
 
     /**
-     * Append a value to stored key
+     * Append a value to stored key.
      *
      * @param  $key
      * @param  $item
      * @param  $postFix
-     * @return mixed
+     *
      * @throws \Exception
+     *
+     * @return mixed
      */
     public function append($key, $item, $postFix): string
     {
@@ -84,7 +88,7 @@ trait RedisTrait
 
         // create new key to hold all rates (relation 1:many)
         // new key
-        $key = $key . $postFix;
+        $key = $key.$postFix;
         $values = $this->getOrCreate($key);
 
         $valueArray = json_decode($values, true);
@@ -94,29 +98,31 @@ trait RedisTrait
 
         return json_encode(
             [
-                "rates" => $valueArray
+                'rates' => $valueArray,
             ]
         );
     }
 
     /**
-     * get a key's value if exist, nether create an empty one
+     * get a key's value if exist, nether create an empty one.
      *
      * @param  $key
-     * @return mixed
+     *
      * @throws \Exception
+     *
+     * @return mixed
      */
     public function getOrCreate($key)
     {
         if (!$this->has($key)) {
-            $this->save($key, "{}");
+            $this->save($key, '{}');
         }
 
         return $this->get($key);
     }
 
     /**
-     * save and persist data on disk Asynchronously
+     * save and persist data on disk Asynchronously.
      *
      * @param $key
      * @param $value
@@ -129,30 +135,32 @@ trait RedisTrait
     }
 
     /**
-     * return value(s) of key(s)
+     * return value(s) of key(s).
      *
      * @param  $key
-     * @return mixed
+     *
      * @throws \Exception
+     *
+     * @return mixed
      */
     public function get($key)
     {
         if ($this->has($key)) {
             return $this->persistenceDriver->get($key);
-
-        } else if ($key == "*") {
+        } elseif ($key == '*') {
             $keys = $this->persistenceDriver->keys('*');
-            return $this->persistenceDriver->mGet($keys);
 
+            return $this->persistenceDriver->mGet($keys);
         }
 
-        throw new ExposeApiInvalidArgument("key not found", 404);
+        throw new ExposeApiInvalidArgument('key not found', 404);
     }
 
     /**
-     * check whether key exist or not
+     * check whether key exist or not.
      *
      * @param  $key
+     *
      * @return int
      */
     public function has($key)
@@ -161,9 +169,10 @@ trait RedisTrait
     }
 
     /**
-     * Generator to loop through all keys efficiently
+     * Generator to loop through all keys efficiently.
      *
      * @param  $keys
+     *
      * @return \Generator
      */
     private function nextCursor($keys)
@@ -173,25 +182,25 @@ trait RedisTrait
         }
     }
 
-
     /**
-     * Search any combination of search
+     * Search any combination of search.
      *
      * @param  $needle
-     * @return string
+     *
      * @throws \Exception
+     *
+     * @return string
      */
     public function search(string $needle)
     {
         if (empty($needle)) {
-            throw new ExposeApiInvalidArgument("search elements are empty");
+            throw new ExposeApiInvalidArgument('search elements are empty');
         }
 
         $found = [];
-        $pattern = str_replace(["{", "}"], "", $needle);
+        $pattern = str_replace(['{', '}'], '', $needle);
 
         foreach ($this->nextCursor($this->get('*')) as $value) {
-
             if (strstr($value, $pattern)) {
                 $found[] = ($value);
             }
@@ -201,17 +210,16 @@ trait RedisTrait
             return json_encode($found);
         }
 
-        throw new \Exception("Recipe does not found with details given.");
+        throw new \Exception('Recipe does not found with details given.');
     }
 
     /**
-     * delete all keys in redis
+     * delete all keys in redis.
+     *
      * @return void
      */
     public function clean()
     {
         $this->persistenceDriver->flushAll();
     }
-
-
 }

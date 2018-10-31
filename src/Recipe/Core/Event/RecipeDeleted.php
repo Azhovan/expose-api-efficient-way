@@ -2,20 +2,19 @@
 
 namespace App\ExposeApi\Recipe\Core\Event;
 
-
 use App\ExposeApi\Recipe\Core\Traits\RedisTrait;
 
 final class RecipeDeleted extends AbstractRecipeEvent
 {
-
     use RedisTrait;
 
     /**
      * event handler
-     * data will be PERSIST in redis
+     * data will be PERSIST in redis.
+     *
+     * @throws \Exception
      *
      * @return string
-     * @throws \Exception
      */
     public function handle()
     {
@@ -23,5 +22,4 @@ final class RecipeDeleted extends AbstractRecipeEvent
 
         return $this->deleteOrFail($key);
     }
-
 }
